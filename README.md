@@ -1,7 +1,8 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Installs mysql https://www.mysql.com/
+Configurable options and cacti monitoring ready.
 
 Requirements
 ------------
