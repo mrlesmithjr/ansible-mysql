@@ -1,0 +1,11 @@
+---
+- include: mysql_root_pw.yml
+
+- name: centos | installing mariadb mysql
+  yum: name={{ item }} state=present
+  with_items:
+    - mariadb-server
+    - mariadb
+
+- name: centos | enabling on boot and start
+  service: name=mariadb state=started enabled=yes
