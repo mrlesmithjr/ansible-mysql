@@ -12,7 +12,7 @@
 - name: debian | installing mysql
   apt: name=mysql-server state=present
 
-- name: debian | configuring mariadb mysql
+- name: debian | configuring mysql
   template: src=etc/mysql/my.cnf.j2 dest=/etc/mysql/my.cnf
   notify: restart mysql
 
