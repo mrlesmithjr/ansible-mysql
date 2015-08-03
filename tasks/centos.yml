@@ -1,9 +1,21 @@
 ---
-- name: centos | installing mariadb mysql
+- name: centos | installing mysql CentOS 6
+  yum: name={{ item }} state=present
+  with_items:
+    - mysql
+  when: ansible_distribution_version|int < 7
+
+- name: centos | installing mariadb mysql CentOS 7
   yum: name={{ item }} state=present
   with_items:
     - mariadb-server
     - mariadb
+  when: ansible_distribution_version|int > 6
+
+- name: centos | enabling on boot and start
+  service: name=mysqld state=started enabled=yes
+  when: ansible_distribution_version|int < 7
 
 - name: centos | enabling on boot and start
   service: name=mariadb state=started enabled=yes
+  when: ansible_distribution_version|int > 6
