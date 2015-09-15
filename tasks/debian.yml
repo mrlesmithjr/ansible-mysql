@@ -1,13 +1,13 @@
 ---
+- include: mysql_root_pw.yml
+
 - name: debian | installing pre-reqs
   apt: name={{ item }} state=present
   with_items:
     - software-properties-common
     - python-mysqldb
     - rsync
-    - mysqltuner
-
-- include: mysql_root_pw.yml
+#    - mysqltuner
 
 - name: debian | installing mysql
   apt: name=mysql-server state=present
