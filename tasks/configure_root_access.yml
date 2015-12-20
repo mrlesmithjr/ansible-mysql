@@ -6,9 +6,9 @@
 
 - name: configure_root_access | waiting for MySQL service
   wait_for:
-    port: 3306
+    port: "{{ mysql_port }}"
     delay: 10
-    
+
 - name: configure_root_access | updating root passwords
   mysql_user:
     name: root
