@@ -1,11 +1,16 @@
 ---
+- name: configure_root_access | ensuring MySQL service is running
+  service:
+    name: mysql
+    state: started
+    
 - name: configure_root_access | updating root passwords
   mysql_user:
     name: root
     host: "{{ item }}"
     password: "{{ mysql_root_password }}"
-    login_password: "{{ mysql_root_password }}"
-    login_user: root
+#    login_password: "{{ mysql_root_password }}"
+#    login_user: root
   with_items:
     - '{{ ansible_hostname }}'
     - '127.0.0.1'
