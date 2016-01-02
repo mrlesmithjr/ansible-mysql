@@ -2,6 +2,8 @@
 - hosts: all
   sudo: true
   vars:
+    - mysql_allow_remote_connections: true
+    - mysql_docker_install: true
   roles:
     - role: ansible-mysql
   tasks:

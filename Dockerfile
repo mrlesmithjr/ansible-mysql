@@ -1,6 +1,6 @@
 #Builds Ubuntu MySQL image
 
-FROM mrlesmithjr/ubuntu-ansible
+FROM mrlesmithjr/ubuntu-ansible:14.04
 
 MAINTAINER mrlesmithjr@gmail.com
 
@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y git
 RUN mkdir -p /opt/ansible-playbooks/roles
 
 #Clone GitHub Repo
-RUN git clone https://github.com/mrlesmithjr/ansible-mysql.git /opt/ansible-playbooks/roles/ansible-mysql
+RUN git clone --depth=50 --branch=ubuntu-14.04 https://github.com/mrlesmithjr/ansible-mysql.git /opt/ansible-playbooks/roles/ansible-mysql
 
 #Copy Ansible playbooks
 COPY playbook.yml /opt/ansible-playbooks/
