@@ -10,6 +10,7 @@ RUN apt-get update && \
 
 COPY playbook.yml requirements.yml /opt/
 
+RUN ansible-galaxy install -r /opt/requirements.yml -f
 RUN ansible-playbook -i "localhost," -c local /opt/playbook.yml
 
 RUN apt-get clean -y && \
