@@ -7,3 +7,6 @@
   when: ansible_os_family == "RedHat"
 
 - include: configure_root_access.yml
+
+- include: mysql_check.yml
+  when: config_mysqlchk
