@@ -17,7 +17,7 @@ MYSQL_OPTS="{{ mysqlchk_opts }}"
 TMP_FILE="/dev/shm/mysqlchk.$$.out"
 ERR_FILE="/dev/shm/mysqlchk.$$.err"
 FORCE_FAIL="/dev/shm/proxyoff"
-MYSQL_BIN="{{ mysql_path }}"
+MYSQL_BIN="{{ mysql_path.stdout }}"
 CHECK_QUERY="show global status where variable_name='wsrep_local_state'"
 preflight_check()
 {
