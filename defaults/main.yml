@@ -9,8 +9,19 @@ deb_db_password: '{{ mysql_root_password }}'  #defines debian db password...gene
 enable_cacti_monitoring: false  #defines if cacti monitoring should be configured
 mysql_allow_remote_connections: false  #defines if mysql should listen on loopback (default) or allow remove connections
 mysql_docker_install: false  #defines if mysql is being installed in Docker
+mysql_mem_multiplier: .25  #defines the percentage of memory to use for memory calculations.
 mysql_port: '3306'  #defines the port for mysql to listen on
 mysql_root_password: 'root' #defines mysql root password...generate using echo password | mkpasswd -s -m sha-512
+mysql_settings:
+  expire_logs_days: '10'
+  key_buffer_size: '{{ (ansible_memtotal_mb | int * mysql_mem_multiplier) | round | int }}M'  #Default is 16M
+  max_allowed_packet: '16M'
+  max_binlog_size: '100M'
+  max_connections: '150'
+  query_cache_limit: '1M'
+  query_cache_size: '16M'
+  thread_cache_size: '8'
+  thread_stack: '192K'
 mysqlchk_host: '127.0.0.1'  #defines the host to run mysqlchk against...usually localhost
 mysqlchk_opts: '-N -q -A'  #defines mysqlchk options to pass
 mysqlchk_user: 'cmon'  #defines mysqlchk user
