@@ -21,6 +21,8 @@
     src: etc/mysql/my.cnf.j2
     dest: /etc/mysql/my.cnf
   notify: restart mysql
+  when: >
+        ansible_distribution_version <= '14.04'
 
 - name: debian | configuring client configuration
   template:
@@ -30,6 +32,8 @@
     group: root
     mode: 0644
   notify: reload mysql
+  when: >
+        ansible_distribution_version <= '14.04'
 
 - name: debian | adding cacti db user for monitoring
   mysql_user:
