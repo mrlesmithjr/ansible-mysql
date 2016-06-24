@@ -24,6 +24,17 @@
   when: >
         ansible_distribution_version <= '14.04'
 
+- name: debian | configuring mysql
+  template:
+    src: "etc/mysql/mysql.conf.d/mysqld.cnf.j2"
+    dest: "/etc/mysql/mysql.conf.d/mysqld.cnf"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  notify: "restart mysql"
+  when: >
+        ansible_distribution_version >= '16.04'
+
 - name: debian | configuring client configuration
   template:
     src: "etc/mysql/conf.d/client.cnf.j2"
