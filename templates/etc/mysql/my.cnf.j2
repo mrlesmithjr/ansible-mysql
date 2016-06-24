@@ -89,15 +89,27 @@ log_error = /var/log/mysql/error.log
 #long_query_time = 2
 #log-queries-not-using-indexes
 #
+{% if config_mysql_replication %}
+# Replication
+{%   for item in mysql_replication_nodes %}
+{%     if inventory_hostname == item.name %}
+server-id = {{ item.server_id }}
+{%     endif %}
+{%   endfor %}
+{%   for item in mysql_replication_dbs %}
+binlog_do_db		= {{ item }}
+{%   endfor %}
+log_bin			= /var/log/mysql/mysql-bin.log
+{% elif not config_mysql_replication %}
 # The following can be used as easy to replay backup logs or for replication.
 # note: if you are setting up a replication slave, see README.Debian about
 #       other settings you may need to change.
 #server-id		= 1
 #log_bin			= /var/log/mysql/mysql-bin.log
-expire_logs_days	= {{ mysql_settings.expire_logs_days }}
-max_binlog_size   = {{ mysql_settings.max_binlog_size }}
 #binlog_do_db		= include_database_name
 #binlog_ignore_db	= include_database_name
+{% endif %}
+
 #
 # * InnoDB
 #
@@ -114,8 +126,6 @@ max_binlog_size   = {{ mysql_settings.max_binlog_size }}
 # ssl-ca=/etc/mysql/cacert.pem
 # ssl-cert=/etc/mysql/server-cert.pem
 # ssl-key=/etc/mysql/server-key.pem
-
-
 
 [mysqldump]
 quick

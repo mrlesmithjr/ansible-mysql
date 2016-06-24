@@ -1,0 +1,38 @@
+[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+# Settings user and group are ignored when systemd is used.
+# If you need to run mysqld under a different user or group,
+# customize your systemd unit file for mariadb according to the
+# instructions in http://fedoraproject.org/wiki/Systemd
+{% if config_mysql_replication %}
+# Replication
+{%   for item in mysql_replication_nodes %}
+{%     if inventory_hostname == item.name %}
+server_id = {{ item.server_id }}
+{%     endif %}
+{%   endfor %}
+{%   for item in mysql_replication_dbs %}
+binlog-do-db		= {{ item }}
+{%   endfor %}
+log-bin			= /var/log/mariadb/mysql-bin.log
+{% elif not config_mysql_replication %}
+# The following can be used as easy to replay backup logs or for replication.
+# note: if you are setting up a replication slave, see README.Debian about
+#       other settings you may need to change.
+#server_id		= 1
+#log-bin			= /var/log/mysql/mysql-bin.log
+#binlog-do-db		= include_database_name
+#binlog-ignore-db	= include_database_name
+{% endif %}
+
+[mysqld_safe]
+log-error=/var/log/mariadb/mariadb.log
+pid-file=/var/run/mariadb/mariadb.pid
+
+#
+# include all files from the config directory
+#
+!includedir /etc/my.cnf.d
