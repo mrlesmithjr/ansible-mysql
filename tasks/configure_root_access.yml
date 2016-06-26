@@ -46,11 +46,7 @@
     name: "root"
     host: "{{ item }}"
     password: "{{ mysql_root_password }}"
-  with_items:
-    - '{{ ansible_hostname }}'
-    - '127.0.0.1'
-    - '::1'
-    - 'localhost'
+  with_items: '{{ mysql_allow_root_access_from_hosts }}'
 
 - name: configure_root | configuring root my.cnf
   template:
