@@ -34,7 +34,7 @@ thread_cache_size = {{ mysql_settings.thread_cache_size }}
 thread_stack = {{ mysql_settings.thread_stack }}
 tmpdir = /tmp
 user = mysql
-{% if config_mysql_replication %}
+{% if mysql_config_replication %}
 # Replication
 {%   for item in mysql_replication_nodes %}
 {%     if inventory_hostname == item.name %}
