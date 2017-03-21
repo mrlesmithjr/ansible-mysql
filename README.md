@@ -79,16 +79,26 @@ mysql_replication_nodes:
 mysql_root_password: 'root'
 
 mysql_settings:
+  collation_server: 'latin1_swedish_ci'
+  character_set_client: 'latin1'
   expire_logs_days: '10'
+  # ON|OFF
+  innodb_doublewrite: 'ON'
+  innodb_flush_log_at_timeout: '1'
+  innodb_read_io_threads: '4'
+  innodb_write_io_threads: '4'
+  join_buffer_size: '0.25M'
   #Default is 16M
   key_buffer_size: '{{ (ansible_memtotal_mb | int * mysql_mem_multiplier) | round | int }}M'
   max_allowed_packet: '16M'
   max_binlog_size: '100M'
   max_connections: '150'
+  max_heap_table_size: '16M'
   query_cache_limit: '1M'
   query_cache_size: '16M'
   thread_cache_size: '8'
   thread_stack: '192K'
+  tmp_table_size: '16M'
 
 # Defines the host to run mysqlchk against...usually localhost
 mysql_mysqlchk_host: '127.0.0.1'
