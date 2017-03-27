@@ -1,5 +1,5 @@
 ---
-- name: configure_root_access | ensuring MySQL service is running (Non Docker install)
+- name: configure_root_access | ensuring MySQL service is running
   service:
     name: "mysql"
     state: "started"
@@ -7,7 +7,7 @@
   when: >
         mariadb_server_installed is not defined
 
-- name: configure_root_access | ensuring MySQL service is running (Non Docker install)
+- name: configure_root_access | ensuring MySQL service is running
   service:
     name: "mariadb"
     state: "started"
