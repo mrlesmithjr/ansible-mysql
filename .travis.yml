@@ -11,6 +11,8 @@ addons:
     packages:
     - python-pip
 
+dist: trusty
+
 install:
   # Install ansible
   - pip install ansible
