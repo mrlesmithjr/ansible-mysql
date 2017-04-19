@@ -11,11 +11,13 @@ addons:
     packages:
     - python-pip
 
-dist: trusty
+# Define Variables
+env:
+  ANSIBLE_VERSION="2.2.2.0"
 
 install:
   # Install ansible
-  - pip install ansible
+  - pip install ansible==$ANSIBLE_VERSION
 
   # Check ansible version
   - ansible --version
