@@ -5,6 +5,11 @@ An [Ansible] role to install/configure [MySQL]
 
 - Configurable options and cacti monitoring ready.
 
+Build Status
+------------
+
+[![Build Status](https://travis-ci.org/mrlesmithjr/ansible-mysql.svg?branch=master)](https://travis-ci.org/mrlesmithjr/ansible-mysql)
+
 Requirements
 ------------
 
