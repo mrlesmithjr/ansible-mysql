@@ -3,6 +3,7 @@
   yum:
     name: "{{ item }}"
     state: "present"
+  become: true
   with_items:
     - 'MySQL-python'
   when: ansible_distribution_release != "Fedora"
@@ -11,6 +12,7 @@
   yum:
     name: "{{ item }}"
     state: "present"
+  become: true
   with_items:
     - 'mysql-server'
     - 'mysql'
@@ -23,6 +25,7 @@
     name: "mysqld"
     state: "started"
     enabled: yes
+  become: true
   when: (ansible_distribution_version < '7')
 
 - name: redhat | installing mariadb mysql CentOS 7
@@ -30,6 +33,7 @@
     name: "{{ item }}"
     state: "present"
   register: "mariadb_server_installed"
+  become: true
   with_items:
     - 'mariadb-server'
     - 'mariadb'
@@ -42,6 +46,7 @@
     name: "mariadb"
     state: "started"
     enabled: yes
+  become: true
   when: (ansible_distribution_version >= '7')
 
 - name: redhat | configuring mysql
@@ -52,6 +57,7 @@
     group: "root"
     mode: 0644
   register: "mariadb_reconfigured_redhat"
+  become: true
   notify: "restart mariadb"
   when: >
         ansible_distribution_release != "Fedora" and
