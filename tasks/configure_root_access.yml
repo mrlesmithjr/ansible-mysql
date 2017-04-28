@@ -4,6 +4,7 @@
     name: "mysql"
     state: "started"
     enabled: yes
+  become: true
   when: >
         mariadb_server_installed is not defined
 
@@ -12,6 +13,7 @@
     name: "mariadb"
     state: "started"
     enabled: yes
+  become: true
   when: >
         (mariadb_server_installed is defined and
         ansible_os_family == "RedHat")
@@ -28,6 +30,7 @@
     owner: "root"
     group: "root"
     mode: 0600
+  become: true
   when: ansible_os_family == "Debian"
 
 - name: configure_root_access | updating root passwords
@@ -35,6 +38,7 @@
     name: "root"
     host: "{{ item }}"
     password: "{{ mysql_root_password }}"
+  become: true
   with_items: '{{ mysql_allow_root_access_from_hosts }}'
   when: not ansible_check_mode
 
@@ -45,4 +49,5 @@
     owner: "root"
     group: "root"
     mode: 0600
+  become: true
   when: ansible_os_family != "Debian"
