@@ -5,8 +5,18 @@
     state: "started"
     enabled: yes
   become: true
+  when: ansible_os_family == "Debian"
+
+- name: configure_root_access | ensuring MySQL service is running
+  service:
+    name: "mysqld"
+    state: "started"
+    enabled: yes
+  become: true
   when: >
-        mariadb_server_installed is not defined
+        (ansible_os_family == "RedHat" and
+        ansible_distribution_release != "Fedora") and
+        (ansible_distribution_version < '7')
 
 - name: configure_root_access | ensuring MySQL service is running
   service:
@@ -15,8 +25,9 @@
     enabled: yes
   become: true
   when: >
-        (mariadb_server_installed is defined and
-        ansible_os_family == "RedHat")
+        (ansible_os_family == "RedHat" and
+        ansible_distribution_release != "Fedora") and
+        (ansible_distribution_version >= '7')
 
 - name: configure_root_access | waiting for MySQL service
   wait_for:
