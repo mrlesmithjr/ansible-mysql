@@ -40,15 +40,6 @@
   when: >
         ansible_distribution_release != "Fedora" and
         (ansible_distribution_version >= '7')
-
-- name: redhat | enabling on boot and start CentOS 7
-  service:
-    name: "mariadb"
-    state: "started"
-    enabled: yes
-  become: true
-  when: (ansible_distribution_version >= '7')
-
 - name: redhat | configuring mysql
   template:
     src: "etc/my.cnf.j2"
@@ -62,3 +53,11 @@
   when: >
         ansible_distribution_release != "Fedora" and
         (ansible_distribution_version >= '7')
+
+- name: redhat | enabling on boot and start CentOS 7
+  service:
+    name: "mariadb"
+    state: "started"
+    enabled: yes
+  become: true
+  when: (ansible_distribution_version >= '7')
