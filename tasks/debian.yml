@@ -17,6 +17,19 @@
     name: "mysql-server"
     state: "present"
   become: true
+  when: >
+        (ansible_distribution == "Debian" and
+        ansible_distribution_version < '9.0') or
+        (ansible_distribution == "Ubuntu")
+
+- name: debian | installing mysql
+  apt:
+    name: "mariadb-server"
+    state: "present"
+  become: true
+  when: >
+        (ansible_distribution == "Debian" and
+        ansible_distribution_version >= '9.0')
 
 - name: debian | configuring mysql
   template:
