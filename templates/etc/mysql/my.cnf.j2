@@ -70,4 +70,6 @@ max_allowed_packet = 16M
 [isamchk]
 key_buffer = 16M
 
+{% if ansible_os_family != "Alpine" %}
 !includedir /etc/mysql/conf.d/
+{% endif %}
