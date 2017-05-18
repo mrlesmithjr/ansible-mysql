@@ -23,7 +23,7 @@ datadir = /var/lib/mysql
 innodb_doublewrite = {{ mysql_settings.innodb_doublewrite|upper }}
 {% if ((ansible_distribution == "Ubuntu") and (ansible_distribution_version > '14.04')) or
   (ansible_distribution != "Ubuntu") %}
-innodb_flush_log_at_timeout = {{ mysql_settings.innodb_flush_log_at_timeout }}
+#innodb_flush_log_at_timeout = {{ mysql_settings.innodb_flush_log_at_timeout }}
 {% endif %}
 innodb_read_io_threads = {{ mysql_settings.innodb_read_io_threads }}
 innodb_write_io_threads = {{ mysql_settings.innodb_write_io_threads }}
