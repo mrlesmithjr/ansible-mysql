@@ -7,10 +7,10 @@
     state: "present"
   become: true
   with_items:
-    - 'automysqlbackup'
-    - 'software-properties-common'
-    - 'python-mysqldb'
-    - 'rsync'
+    - automysqlbackup
+    - software-properties-common
+    - python-mysqldb
+    - rsync
 
 - name: debian | installing mysql
   apt:
