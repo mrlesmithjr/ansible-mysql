@@ -15,7 +15,7 @@
   become: true
   when: >
         (ansible_os_family == "RedHat" and
-        ansible_distribution_release != "Fedora") and
+        ansible_distribution != "Fedora") and
         (ansible_distribution_version < '7')
 
 - name: configure_root_access | ensuring MySQL service is running
@@ -26,7 +26,7 @@
   become: true
   when: >
         ((ansible_os_family == "RedHat" and
-        ansible_distribution_release != "Fedora") and
+        ansible_distribution != "Fedora") and
         (ansible_distribution_version >= '7')) or
         ansible_os_family == "Alpine"
 
