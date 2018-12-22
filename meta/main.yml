@@ -1,13 +1,13 @@
 ---
 galaxy_info:
-  author:              Larry Smith Jr.
-  description:         An Ansible role to install/configure MySQL https://www.mysql.com/
+  author: Larry Smith Jr.
+  description: An Ansible role to install/configure MySQL https://www.mysql.com/
 
-  license:             MIT
+  license: MIT
   min_ansible_version: 1.2
 
   platforms:
-  - name:              EL
+  - name: EL
     versions:
     - 6
     - 7
@@ -17,13 +17,16 @@ galaxy_info:
     - 24
     - 25
     - 26
-  - name:              Ubuntu
+    - 27
+    - 28
+    - 29
+  - name: Ubuntu
     versions:
     - bionic
     - precise
     - trusty
     - xenial
-  - name:              Debian
+  - name: Debian
     versions:
     - jessie
     - stretch
@@ -31,4 +34,4 @@ galaxy_info:
   galaxy_tags:
   - database
 
-dependencies:          []
+dependencies: []
