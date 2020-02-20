@@ -3,9 +3,14 @@
   set_fact:
     mysql_pre_req_packages:
       - automysqlbackup
-      - software-properties-common
+      - python-dev
       # - python-mysqldb
+      - python-pip
+      - python-setuptools
+      - python-virtualenv
       - rsync
+      - software-properties-common
+      - virtualenv
   when:
     - ansible_os_family == "Debian"
     - ansible_python_version is version('3', '<')
@@ -14,12 +19,62 @@
   set_fact:
     mysql_pre_req_packages:
       - automysqlbackup
-      - software-properties-common
+      - python3-dev
       # - python3-mysqldb
+      - python3-pip
+      - python3-setuptools
+      - python3-venv
       - rsync
+      - software-properties-common
+      - virtualenv
   when:
     - ansible_os_family == "Debian"
     - ansible_python_version is version('3', '>=')
+
+- name: set_facts | Setting RedHat Facts (Non-Fedora)
+  set_fact:
+    mysql_pre_req_packages:
+      - libselinux-python
+      # - mysql-devel
+      - python-devel
+      - python-dnf
+      # - python-mysql
+      - python-pip
+      - python-setuptools
+      - python-virtualenv
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution != "Fedora"
+
+- name: set_facts | Setting RedHat Facts (Fedora)
+  set_fact:
+    mysql_pre_req_packages:
+      - libselinux-python
+      # - mysql-devel
+      - python-devel
+      - python-dnf
+      # - python-mysql
+      - python-pip
+      - python-setuptools
+      - python-virtualenv
+  when:
+    - ansible_distribution == "Fedora"
+    - ansible_distribution_version is version('30', '<')
+
+- name: set_facts | Setting RedHat Facts (Fedora)
+  set_fact:
+    mysql_pre_req_packages:
+      # - mysql-devel
+      - python3-devel
+      - python3-dnf
+      - python3-libselinux
+      # - python3-mysql
+      - python3-pip
+      - python3-setuptools
+      - python3-virtualenv
+  when:
+    - ansible_distribution == "Fedora"
+    - ansible_distribution_version is version('30', '>=')
 
 - name: set_facts | Setting Debian Facts
   set_fact:
