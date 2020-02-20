@@ -12,6 +12,9 @@ mysql_allow_root_access_from_hosts:
   - localhost
 #  - "%"
 
+# Defines whether or not to configure
+mysql_config: false
+
 # Defines if replication should be configured
 mysql_config_replication: false
 

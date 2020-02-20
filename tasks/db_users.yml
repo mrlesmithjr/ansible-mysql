@@ -5,7 +5,7 @@
     password: "{{ item['password'] }}"
     state: "{{ item['state'] }}"
   become: true
-  with_items: "{{ mysql_db_users }}"
+  loop: "{{ mysql_db_users }}"
   when: item['privs'] is not defined
 
 - name: db_users | Managing Database Users
@@ -21,4 +21,4 @@
     - "{{ mysql_db_users }}"
     - privs
   when: >
-        item[1] is defined
+    item[1] is defined
