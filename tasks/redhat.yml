@@ -1,4 +1,16 @@
 ---
+# Need to add EPEL Repo for python2 pip
+- name: redhat | Adding EPEL Repo
+  yum:
+    name: epel-release
+    state: present
+  become: true
+  register: result
+  until: result is successful
+  when:
+    - ansible_distribution != "Fedora"
+    - ansible_python_version is version('3', '<')
+
 - name: redhat | installing pre-reqs
   yum:
     name: "{{ mysql_pre_req_packages }}"
@@ -7,6 +19,16 @@
   register: result
   until: result is successful
   when: ansible_distribution != "Fedora"
+
+- name: redhat | Installing Pre-Reqs On Fedora
+  dnf:
+    name: "{{ mysql_pre_req_packages }}"
+    state: present
+  become: true
+  register: result
+  until: result is successful
+  when:
+    - ansible_distribution == "Fedora"
 
 - name: redhat | installing mysql CentOS 6
   yum:
@@ -21,16 +43,6 @@
     - ansible_distribution != "Fedora"
     - ansible_distribution_version is version('7', '<')
 
-- name: redhat | Installing Pre-Reqs On Fedora
-  dnf:
-    name: "{{ mysql_pre_req_packages }}"
-    state: present
-  become: true
-  register: result
-  until: result is successful
-  when:
-    - ansible_distribution == "Fedora"
-
 - name: redhat | Installing MySQL Fedora
   dnf:
     name:
@@ -41,6 +53,19 @@
   register: result
   until: result is successful
   when: ansible_distribution == "Fedora"
+
+- name: redhat | installing mariadb mysql CentOS 7
+  yum:
+    name:
+      - mariadb-server
+      - mariadb
+    state: present
+  become: true
+  register: result
+  until: result is successful
+  when:
+    - ansible_distribution != "Fedora"
+    - ansible_distribution_version is version('7', '>=')
 
 - name: redhat | Ensuring mysqld Is Enabled and Starts On Boot
   service:
@@ -54,31 +79,6 @@
     (ansible_distribution == "Fedora" and
     (ansible_distribution_version is version('24', '==') or
     ansible_distribution_version is version('25', '==')))
-
-- name: redhat | installing mariadb mysql CentOS 7
-  yum:
-    name: ["mariadb-server", "mariadb"]
-    state: present
-  become: true
-  register: result
-  until: result is successful
-  when:
-    - ansible_distribution != "Fedora"
-    - ansible_distribution_version is version('7', '>=')
-
-- name: redhat | configuring mysql
-  template:
-    src: etc/my.cnf.j2
-    dest: /etc/my.cnf
-    owner: root
-    group: root
-    mode: 0644
-  register: mariadb_reconfigured_redhat
-  become: true
-  notify: restart mariadb
-  when:
-    - ansible_distribution != "Fedora"
-    - ansible_distribution_version is version('7', '>=')
 
 - name: redhat | Ensuring mariadb Service Is Enabled and Starts On Boot
   service:

@@ -32,14 +32,3 @@
   command: /etc/init.d/mariadb setup
   become: true
   when: not _alpine_mysql_setup['stat']['exists']
-
-- name: alpine | Configuring MySQL
-  template:
-    src: etc/mysql/my.cnf.j2
-    dest: /etc/mysql/my.cnf
-    owner: root
-    group: root
-    mode: 0644
-  register: mariadb_reconfigured_alpine
-  become: true
-  notify: restart mariadb
