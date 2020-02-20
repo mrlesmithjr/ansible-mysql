@@ -1,12 +1,29 @@
 ---
-- name: set_facts | Setting Debian Facts
+- name: set_facts | Setting Debian/Ubuntu Pre-Reqs
   set_fact:
-    mysql_package: mysql-server
     mysql_pre_req_packages:
       - automysqlbackup
       - software-properties-common
       - python-mysqldb
       - rsync
+  when:
+    - ansible_os_family == "Debian"
+    - ansible_python_version is version('3', '<')
+
+- name: set_facts | Setting Debian/Ubuntu Pre-Reqs
+  set_fact:
+    mysql_pre_req_packages:
+      - automysqlbackup
+      - software-properties-common
+      - python3-mysqldb
+      - rsync
+  when:
+    - ansible_os_family == "Debian"
+    - ansible_python_version is version('3', '>=')
+
+- name: set_facts | Setting Debian Facts
+  set_fact:
+    mysql_package: mysql-server
   when:
     - ansible_distribution == "Debian"
     - ansible_distribution_version is version('9', '<')
@@ -14,11 +31,6 @@
 - name: set_facts | Setting Debian Facts
   set_fact:
     mysql_package: mariadb-server
-    mysql_pre_req_packages:
-      - automysqlbackup
-      - software-properties-common
-      - python-mysqldb
-      - rsync
   when:
     - ansible_distribution == "Debian"
     - ansible_distribution_version is version('9', '>=')
@@ -26,23 +38,5 @@
 - name: set_facts | Setting Ubuntu Facts
   set_fact:
     mysql_package: mysql-server
-    mysql_pre_req_packages:
-      - automysqlbackup
-      - software-properties-common
-      - python-mysqldb
-      - rsync
   when:
     - ansible_distribution == "Ubuntu"
-    - ansible_distribution_version is version('18.04', '<')
-
-- name: set_facts | Setting Ubuntu Facts
-  set_fact:
-    mysql_package: mysql-server
-    mysql_pre_req_packages:
-      - automysqlbackup
-      - software-properties-common
-      - python3-mysqldb
-      - rsync
-  when:
-    - ansible_distribution == "Ubuntu"
-    - ansible_distribution_version is version('18.04', '>=')
