@@ -1,5 +1,5 @@
 ---
-- name: alpine | Configuring MySQL
+- name: config | Configuring MySQL
   template:
     src: etc/mysql/my.cnf.j2
     dest: /etc/mysql/my.cnf
@@ -11,7 +11,7 @@
   notify: restart mariadb
   when: ansible_os_family == "Alpine"
 
-- name: debian | configuring mysql
+- name: config | configuring mysql
   template:
     src: etc/mysql/my.cnf.j2
     dest: /etc/mysql/my.cnf
@@ -26,7 +26,7 @@
     ansible_distribution_version is version('14.04', '<=')) or
     ansible_distribution == "Debian"
 
-- name: debian | configuring mysql
+- name: config | configuring mysql
   template:
     src: etc/mysql/mysql.conf.d/mysqld.cnf.j2
     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -40,7 +40,7 @@
     - ansible_distribution == "Ubuntu"
     - ansible_distribution_version is version('16.04', '>=')
 
-- name: debian | configuring mysql
+- name: config | configuring mysql
   template:
     src: etc/mysql/mysql.conf.d/mysqld.cnf.j2
     dest: /etc/mysql/conf.d/mysqld.cnf
@@ -52,7 +52,7 @@
   notify: restart mysql
   when: ansible_distribution == "Debian"
 
-- name: debian | configuring client configuration
+- name: config | configuring client configuration
   template:
     src: etc/mysql/conf.d/client.cnf.j2
     dest: /etc/mysql/conf.d/client.cnf
@@ -65,7 +65,7 @@
     - ansible_os_family == "Debian"
     - ansible_distribution_version is version('14.04', '<=')
 
-- name: redhat | configuring mysql
+- name: config | configuring mysql
   template:
     src: etc/my.cnf.j2
     dest: /etc/my.cnf
