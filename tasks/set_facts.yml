@@ -43,10 +43,10 @@
     mysql_pre_req_packages:
       - libselinux-python
       - mysql-devel
-      # - python-devel
+      - python-devel
       # - python-dnf
-      - python-mysql
-      # - python-pip
+      # - python-mysql
+      - python-pip
       # - python-setuptools
       # - python-virtualenv
   when:
@@ -57,11 +57,11 @@
   set_fact:
     mysql_pre_req_packages:
       - mysql-devel
-      # - python3-devel
+      - python3-devel
       # - python3-dnf
       - python3-libselinux
-      - python3-mysql
-      # - python3-pip
+      # - python3-mysql
+      - python3-pip
       # - python3-setuptools
       # - python3-virtualenv
   when:

@@ -1,12 +1,4 @@
 ---
-# - name: configure_root_access | Installing PyMySQL
-#   pip:
-#     name: PyMySQL
-#     state: present
-#   become: true
-#   register: result
-#   until: result is successful
-
 - name: configure_root_access | ensuring MySQL service is running
   service:
     name: mysql

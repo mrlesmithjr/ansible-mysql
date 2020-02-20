@@ -30,6 +30,14 @@
   when:
     - ansible_distribution == "Fedora"
 
+- name: redhat | Installing PyMySQL
+  pip:
+    name: PyMySQL
+    state: present
+  become: true
+  register: result
+  until: result is successful
+
 - name: redhat | installing mysql CentOS 6
   yum:
     name:
