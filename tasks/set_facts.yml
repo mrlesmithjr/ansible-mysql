@@ -4,7 +4,7 @@
     mysql_pre_req_packages:
       - automysqlbackup
       - software-properties-common
-      - python-mysqldb
+      # - python-mysqldb
       - rsync
   when:
     - ansible_os_family == "Debian"
@@ -15,7 +15,7 @@
     mysql_pre_req_packages:
       - automysqlbackup
       - software-properties-common
-      - python3-mysqldb
+      # - python3-mysqldb
       - rsync
   when:
     - ansible_os_family == "Debian"
