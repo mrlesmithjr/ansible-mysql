@@ -8,9 +8,9 @@
     state: present
   become: true
   with_items: "{{ mysql_replication_nodes }}"
-  when: >
-        item.role == "master" and
-        inventory_hostname == item.name
+  when:
+    - item.role == "master"
+    - inventory_hostname == item.name
 
 - name: setup_replication | ensuring replicated dbs exist
   mysql_db:
@@ -26,10 +26,10 @@
   register: mysql_restarted
   become: true
   when: >
-        ansible_os_family == "Debian" and
-        (mysql_reconfigured_14_04.changed or
-        mysql_reconfigured_16_04.changed or
-        mysql_reconfigured_debian.changed)
+    ansible_os_family == "Debian" and
+    (mysql_reconfigured_14_04.changed or
+    mysql_reconfigured_16_04.changed or
+    mysql_reconfigured_debian.changed)
 
 - name: setup_replication | restarting mysql if reconfigured
   service:
@@ -37,9 +37,9 @@
     state: restarted
   register: mariadb_restarted
   become: true
-  when: >
-        ansible_os_family == "RedHat" and
-        mariadb_reconfigured_redhat.changed
+  when:
+    - ansible_os_family == "RedHat"
+    - mariadb_reconfigured_redhat.changed
 
 - name: setup_replication | waiting for MySQL service
   wait_for:
@@ -47,8 +47,8 @@
     delay: 10
   become: true
   when: >
-        mysql_restarted.changed or
-        mariadb_reconfigured_redhat.changed
+    mysql_restarted.changed or
+    mariadb_reconfigured_redhat.changed
 
 - name: setup_replication | checking master status
   mysql_replication:
@@ -69,15 +69,15 @@
   ignore_errors: true
   become: true
   with_items: "{{ mysql_replication_nodes }}"
-  when: >
-        item.role == "slave" and
-        inventory_hostname == item.name
+  when:
+    - item.role == "slave"
+    - inventory_hostname == item.name
 
 - name: setup_replication | start slave
   mysql_replication:
     mode: startslave
   become: true
   with_items: "{{ mysql_replication_nodes }}"
-  when: >
-        item.role == "slave" and
-        inventory_hostname == item.name
+  when:
+    - item.role == "slave"
+    - inventory_hostname == item.name

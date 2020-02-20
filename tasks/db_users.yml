@@ -21,4 +21,4 @@
     - "{{ mysql_db_users }}"
     - privs
   when: >
-        item[1] is defined
+    item[1] is defined

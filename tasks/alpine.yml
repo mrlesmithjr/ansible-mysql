@@ -1,7 +1,7 @@
 ---
 - name: alpine | Installing MySQL Pre-Reqs
   apk:
-    name: ['py-mysqldb', 'mysql-client']
+    name: ["py-mysqldb", "mysql-client"]
     state: present
   become: true
   register: result

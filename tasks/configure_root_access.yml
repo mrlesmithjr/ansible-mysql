@@ -13,10 +13,10 @@
     state: started
     enabled: true
   become: true
-  when: >
-        (ansible_os_family == "RedHat" and
-        ansible_distribution != "Fedora") and
-        (ansible_distribution_version < '7')
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution != "Fedora"
+    - ansible_distribution_version is version('7', '<')
 
 - name: configure_root_access | ensuring MySQL service is running
   service:
@@ -24,11 +24,19 @@
     state: started
     enabled: true
   become: true
-  when: >
-        ((ansible_os_family == "RedHat" and
-        ansible_distribution != "Fedora") and
-        (ansible_distribution_version >= '7')) or
-        ansible_os_family == "Alpine"
+  when:
+    - ansible_os_family == "Alpine"
+
+- name: configure_root_access | ensuring MySQL service is running
+  service:
+    name: mariadb
+    state: started
+    enabled: true
+  become: true
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution != "Fedora"
+    - ansible_distribution_version is version('7', '>=')
 
 - name: configure_root_access | waiting for MySQL service
   wait_for:

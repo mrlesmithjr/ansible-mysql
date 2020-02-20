@@ -12,17 +12,17 @@
 - include: configure_root_access.yml
 
 - include: dbs.yml
-  when: >
-        mysql_dbs is defined and
-        mysql_dbs != []
+  when:
+    - mysql_dbs is defined
+    - mysql_dbs != []
 
 - include: db_users.yml
-  when: >
-        mysql_db_users is defined and
-        mysql_db_users != []
+  when:
+    - mysql_db_users is defined
+    - mysql_db_users != []
 
 - include: mysql_check.yml
-  when: mysql_config_mysqlchk
+  when: mysql_config_mysqlchk|bool
 
 - include: setup_replication.yml
-  when: mysql_config_replication
+  when: mysql_config_replication|bool

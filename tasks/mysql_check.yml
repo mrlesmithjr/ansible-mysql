@@ -7,7 +7,7 @@
   register: result
   until: result is successful
   when: >
-        ansible_os_family == "Debian"
+    ansible_os_family == "Debian"
 
 - name: mysql_check | configuring mysqlchk xinetd
   template:
@@ -15,7 +15,7 @@
     dest: /etc/xinetd.d/mysqlchk
   become: true
   when: >
-        ansible_os_family == "Debian"
+    ansible_os_family == "Debian"
 
 - name: mysql_check | enabling xinetd service
   service:
@@ -23,7 +23,7 @@
     enabled: true
   become: true
   when: >
-        ansible_os_family == "Debian"
+    ansible_os_family == "Debian"
 
 - name: mysql_check | finding mysql command path
   command: which mysql
