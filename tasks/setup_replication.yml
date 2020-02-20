@@ -19,7 +19,7 @@
   become: true
   with_items: "{{ mysql_replication_dbs }}"
 
-- name: setup_replication | restarting mysql if reconfigured
+- name: setup_replication | restarting mysql if reconfigured # noqa 503
   service:
     name: mysql
     state: restarted
@@ -41,7 +41,7 @@
     - ansible_os_family == "RedHat"
     - mariadb_reconfigured_redhat.changed
 
-- name: setup_replication | waiting for MySQL service
+- name: setup_replication | waiting for MySQL service # noqa 503
   wait_for:
     port: "{{ mysql_port }}"
     delay: 10
