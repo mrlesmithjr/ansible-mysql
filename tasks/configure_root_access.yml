@@ -1,11 +1,11 @@
 ---
-- name: configure_root_access | Installing PyMySQL
-  pip:
-    name: PyMySQL
-    state: present
-  become: true
-  register: result
-  until: result is successful
+# - name: configure_root_access | Installing PyMySQL
+#   pip:
+#     name: PyMySQL
+#     state: present
+#   become: true
+#   register: result
+#   until: result is successful
 
 - name: configure_root_access | ensuring MySQL service is running
   service:
@@ -51,6 +51,16 @@
     port: "{{ mysql_port }}"
     delay: 10
 
+- name: configure_root | configuring root my.cnf
+  template:
+    src: root/my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0600
+  become: true
+  when: ansible_os_family == "Debian"
+
 - name: configure_root_access | updating root passwords
   mysql_user:
     name: root
@@ -69,3 +79,4 @@
     group: root
     mode: 0600
   become: true
+  when: ansible_os_family != "Debian"

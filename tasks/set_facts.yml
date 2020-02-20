@@ -5,16 +5,16 @@
   set_fact:
     mysql_pre_req_packages:
       - automysqlbackup
-      - python-dev
-      # - python-mysqldb
-      - python-pip
-      - python-setuptools
-      - python-virtualenv
-      - python3-dev
-      # - python3-mysqldb
-      - python3-pip
-      - python3-setuptools
-      - python3-venv
+      # - python-dev
+      - python-mysqldb
+      # - python-pip
+      # - python-setuptools
+      # - python-virtualenv
+      # - python3-dev
+      - python3-mysqldb
+      # - python3-pip
+      # - python3-setuptools
+      # - python3-venv
       - rsync
       - software-properties-common
       - virtualenv
@@ -26,11 +26,11 @@
   set_fact:
     mysql_pre_req_packages:
       - automysqlbackup
-      - python3-dev
-      # - python3-mysqldb
-      - python3-pip
-      - python3-setuptools
-      - python3-venv
+      # - python3-dev
+      - python3-mysqldb
+      # - python3-pip
+      # - python3-setuptools
+      # - python3-venv
       - rsync
       - software-properties-common
       - virtualenv
@@ -42,13 +42,13 @@
   set_fact:
     mysql_pre_req_packages:
       - libselinux-python
-      # - mysql-devel
-      - python-devel
-      - python-dnf
-      # - python-mysql
-      - python-pip
-      - python-setuptools
-      - python-virtualenv
+      - mysql-devel
+      # - python-devel
+      # - python-dnf
+      - python-mysql
+      # - python-pip
+      # - python-setuptools
+      # - python-virtualenv
   when:
     - ansible_os_family == "RedHat"
     - ansible_python_version is version('3', '<')
@@ -56,14 +56,14 @@
 - name: set_facts | Setting RedHat Facts
   set_fact:
     mysql_pre_req_packages:
-      # - mysql-devel
-      - python3-devel
-      - python3-dnf
+      - mysql-devel
+      # - python3-devel
+      # - python3-dnf
       - python3-libselinux
-      # - python3-mysql
-      - python3-pip
-      - python3-setuptools
-      - python3-virtualenv
+      - python3-mysql
+      # - python3-pip
+      # - python3-setuptools
+      # - python3-virtualenv
   when:
     - ansible_os_family == "RedHat"
     - ansible_python_version is version('3', '>=')
