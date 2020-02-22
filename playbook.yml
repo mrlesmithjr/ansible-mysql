@@ -1,5 +1,7 @@
 ---
 - name: Example Playbook
   hosts: all
-  roles:
-    - role: ansible-mysql
+  tasks:
+    - name: "Include ansible-mysql"
+      include_role:
+        name: "ansible-mysql"
